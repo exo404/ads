@@ -68,6 +68,20 @@ class SelectionSort implements SortAlgorithm {
      */
     public static void main(String[] args) {
         final SelectionSort selectionSort = new SelectionSort();
+        /**
+         * Generates an array of random integers, converts each int to an Integer object,
+         * and collects them into a new Integer array.
+         *
+         * <p>
+         * - {@code SortUtilsRandomGenerator.generateIntArray(10, 100)} creates an array of 10 random integers,
+         *   each in the range [0, 100).
+         * - {@code Arrays.stream(...)} creates a stream from the generated int array.
+         * - {@code .boxed()} converts each primitive int in the stream to an Integer object.
+         * - {@code .toArray(Integer[]::new)} collects the stream elements into a new Integer array.
+         * </p>
+         *
+         * @return a new Integer array containing 10 random values between 0 (inclusive) and 100 (exclusive)
+         */
         final Integer[] randomArray = Arrays.stream(SortUtilsRandomGenerator.generateIntArray(10, 100))
                 .boxed()
                 .toArray(Integer[]::new);

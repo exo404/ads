@@ -92,6 +92,35 @@ class InsertionSort implements SortAlgorithm {
     }
 
     /**
+     * Insertion Sort Agorithm implemented using recursion
+     * 
+     * @param array the array to be sorted
+     * @param n the size of the array
+     */
+    public <T extends Comparable<T>> void sortRecursive(T[] array, int n){
+        if (n == 0){
+            return;
+        }
+        sortRecursive(array, n-1);
+        insert(array, n);
+    }
+
+    /**
+     * Insert array[n] element in the correct position
+     * 
+     * @param array the array to be sorted
+     * @param n the size of the array
+     */
+    public <T extends Comparable<T>> void insert(T[] array, int n){
+        T key = array[n];
+        int i = n - 1;
+        while (i >= 0 && SortUtils.greater(array[i], key)) {
+            array[i + 1] = array[i--];
+        } 
+        array[i + 1] = key;
+    }
+
+    /**
      * Sentinel sort is a function which on the first step finds the minimal element in the provided
      * array and puts it to the zero position, such a trick gives us an ability to avoid redundant
      * comparisons like `j > 0` and swaps (we can move elements on position right, until we find
@@ -152,6 +181,8 @@ class InsertionSort implements SortAlgorithm {
         System.out.println("Original array:");
         SortUtils.print(randomArray);
         System.out.println("Sorted array:");
-        SortUtils.print(insertionSort.sortOpposite(randomArray, 0, randomArray.length));
+        //SortUtils.print(insertionSort.sort(randomArray, randomArray.length - 1));
+        insertionSort.sortRecursive(randomArray, randomArray.length - 1);
+        SortUtils.print(randomArray);
     }
 }
