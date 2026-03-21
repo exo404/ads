@@ -37,7 +37,7 @@ public final class SearchUtilsRandomGenerator {
      * Function to generate array of int values, with predefined size and upper bound.
      *
      * @param size result array size
-     * @param n    upper bound for generated int values (exclusive)
+     * @param n upper bound for generated int values (exclusive)
      * @return array of int values, randomly generated, each element is between [0, n)
      */
     public static int[] generateIntArray(int size, int n) {
