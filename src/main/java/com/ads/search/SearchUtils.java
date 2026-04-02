@@ -44,7 +44,7 @@ final class SearchUtils {
         return firstElement.compareTo(secondElement) >= 0;
     }
 
-        /**
+    /**
      * Compares two elements to see if the first is equal to the second.
      *
      * @param firstElement  the first element to compare
