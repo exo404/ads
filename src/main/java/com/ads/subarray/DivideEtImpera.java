@@ -1,5 +1,6 @@
 package com.ads.subarray;
 
+import com.ads.subarray.MaxSubArrayAlgorithm;
 import com.ads.subarray.Utils;
 import com.ads.subarray.UtilsRandomGenerator;
 import java.util.Arrays;
@@ -8,59 +9,27 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
- * Maximum sub-array problem class algorithms
+ * Maximum sub-array divide et impera generic algorithm
  * 
- * This class provides methods for both brute force and divide et impera versions of the
+ * This class provides methods for the divide et impera version of the
  * maximum sub-array problem algorithm.
  * 
  * Time Complexity:
- *  - Divide et impera -> O(nlogn)
- *  - Brute force -> O(n^2)  
+ *  O(nlogn)  
  *
  * Space Complexity: 
- *  - Divide et impera -> O(logn)
- *  - Brute force -> O(1) uses only 4 variables to save the current maximum 
+ *  O(logn) 
+ *  
+ * @see MaxSubArrayAlgorithm
  */
-class MaxSubArray {
-
-    /**
-     * Brute force method to find the maximum sub-array
-     * @param A The array
-     * @param l The first index of the subarray to analyze
-     * @param r The last index of the subarray to analyze
-     * @return a map containing the first and last index of the sub-array (maxL, maxR) and the maxSum sum of its elements
-     */
-    public static Map<String, Integer> bruteForceFind (Integer[] A, int l, int r) {
-        Integer maxSum = -Integer.MAX_VALUE;
-        Integer maxL = l;
-        Integer maxR = l;
-        Integer sum;
-        for (int i = l; i <= r; i++) {
-            sum = 0;
-            for (int j = i; j <= r; j++) {
-                sum += A[j];
-                if (sum > maxSum){
-                    maxSum = sum;
-                    maxL = i;
-                    maxR = j;
-                }
-            }
-        }
-        Map<String, Integer> results = new HashMap<>();
-        if (maxSum > 0) {
-            results.put("maxL", maxL);
-            results.put("maxR", maxR);
-            results.put("maxSum", maxSum);
-        }
-        else {
-            results.put("maxL", -1);
-            results.put("maxR", -1);
-            results.put("maxSum", 0);
-        }
-        return results;
+class DivideEtImpera implements MaxSubArrayAlgorithm{
+    
+    @Override
+    public Map<String, Integer> find(Integer[] array, int l, int r){
+        return divideEtImperaFind(array, l, r);
     }
-
-        /**
+    
+    /**
      * Divide et impera method to find the maximum sub-array
      * @param A The array
      * @param l The first index of the subarray to analyze
@@ -68,7 +37,7 @@ class MaxSubArray {
      * @return a map containing the first and last index of the sub-array (maxL, maxR) and the maxSum sum of its elements
      */
     public static Map<String, Integer> divideEtImperaFind (Integer[] A, int l, int r) {
-        if (isNegative(A, l, r)) {
+        if (Utils.isNegative(A, l, r)) {
             Map<String, Integer> results = new HashMap<>();
             results.put("maxL", -1);
             results.put("maxR", -1);
@@ -130,46 +99,9 @@ class MaxSubArray {
         results.put("maxSum", maxSum);
         return results;
     }
-
-    public static boolean isNegative(Integer[] A, int l, int r) {
-        for (int i = l; i <= r; i++){
-            if (A[i] > 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    
-    public static Map<String, Integer> kadanFind(Integer[] A, int l, int r) {
-        int maxSum = 0;
-        int tempSum = 0;
-        int maxL = l;
-        int tempL = l;
-        int maxR = l;
-
-        for (int i = l; i <= r; i++) {
-            tempSum += A[i];
-    
-            if (tempSum > maxSum) {
-                maxSum = tempSum;
-                maxR = i;
-                maxL = tempL;
-            }
-            else if (tempSum < 0) {
-                tempSum = 0;
-                tempL = i + 1;
-            }
-        }
-        Map<String, Integer> results = new HashMap<>();
-        results.put("maxL", maxL);
-        results.put("maxR", maxR);
-        results.put("maxSum", maxSum);
-        return results;
-    }
     
     public static void main(String[] args) {
-        final MaxSubArray maxSubArray = new MaxSubArray();
+        final DivideEtImpera maxSubArray = new DivideEtImpera();
         final Integer[] A = Arrays.stream(UtilsRandomGenerator.generateIntArray(10, 100))
             .boxed()
             .toArray(Integer[]::new);
@@ -177,8 +109,6 @@ class MaxSubArray {
             A[i] = -A[i]; 
         }
         Utils.print(A);
-        Utils.results(maxSubArray.bruteForceFind(A, 0, A.length - 1));
-        Utils.results(maxSubArray.divideEtImperaFind(A, 0, A.length - 1));
-        Utils.results(maxSubArray.kadanFind(A, 0, A.length - 1));
+        Utils.results(maxSubArray.find(A, 0, A.length - 1));
     }
 }

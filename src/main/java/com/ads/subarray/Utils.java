@@ -1,7 +1,6 @@
 package com.ads.subarray;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +57,21 @@ final class Utils {
      */
     public static <T> void print(T[] array){
         System.out.println(Arrays.toString(array));
+    }
+
+    /**
+     * Verify if the sub-array contains only negative numbers
+     * @param A the sub-array
+     * @param l start index of the sub-array
+     * @param r end index of the sub-array
+     */
+    public static boolean isNegative(Integer[] A, int l, int r) {
+        for (int i = l; i <= r; i++){
+            if (A[i] > 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static <T> void results(Map<String, T> map){
